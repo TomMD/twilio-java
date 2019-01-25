@@ -26,6 +26,8 @@ public class VerificationCreator extends Creator<Verification> {
     private final String to;
     private final String channel;
     private String customMessage;
+    private String sendDigits;
+    private String locale;
 
     /**
      * Construct a new VerificationCreator.
@@ -50,6 +52,31 @@ public class VerificationCreator extends Creator<Verification> {
      */
     public VerificationCreator setCustomMessage(final String customMessage) {
         this.customMessage = customMessage;
+        return this;
+    }
+
+    /**
+     * Digits to send when a phone call is started, same parameters as in
+     * Programmable Voice are supported.
+     * 
+     * @param sendDigits Digits to send when a phone call is started
+     * @return this
+     */
+    public VerificationCreator setSendDigits(final String sendDigits) {
+        this.sendDigits = sendDigits;
+        return this;
+    }
+
+    /**
+     * Supported values are af, ar, ca, cs, da, de, el, en, es, fi, fr, he, hi, hr,
+     * hu, id, it, ja, ko, ms, nb, nl, pl, pt, pr-BR, ro, ru, sv, th, tl, tr, vi,
+     * zh, zh-CN, zh-HK.
+     * 
+     * @param locale Locale used in the sms or call.
+     * @return this
+     */
+    public VerificationCreator setLocale(final String locale) {
+        this.locale = locale;
         return this;
     }
 
@@ -108,6 +135,14 @@ public class VerificationCreator extends Creator<Verification> {
 
         if (customMessage != null) {
             request.addPostParam("CustomMessage", customMessage);
+        }
+
+        if (sendDigits != null) {
+            request.addPostParam("SendDigits", sendDigits);
+        }
+
+        if (locale != null) {
+            request.addPostParam("Locale", locale);
         }
     }
 }

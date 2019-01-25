@@ -33,6 +33,7 @@ public class ServiceUpdater extends Updater<Service> {
     private Service.NumberSelectionBehavior numberSelectionBehavior;
     private URI interceptCallbackUrl;
     private URI outOfSessionCallbackUrl;
+    private String chatInstanceSid;
 
     /**
      * Construct a new ServiceUpdater.
@@ -141,7 +142,10 @@ public class ServiceUpdater extends Updater<Service> {
 
     /**
      * A URL for Twilio call when a new Interaction has no
-     * [Session](https://www.twilio.com/docs/proxy/api/session)..
+     * [Session](https://www.twilio.com/docs/proxy/api/session). See [Out-of-Session
+     * Callback Response
+     * Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide)
+     * for more information..
      * 
      * @param outOfSessionCallbackUrl A URL for Twilio call when a new Interaction
      *                                has no Session.
@@ -154,7 +158,10 @@ public class ServiceUpdater extends Updater<Service> {
 
     /**
      * A URL for Twilio call when a new Interaction has no
-     * [Session](https://www.twilio.com/docs/proxy/api/session)..
+     * [Session](https://www.twilio.com/docs/proxy/api/session). See [Out-of-Session
+     * Callback Response
+     * Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide)
+     * for more information..
      * 
      * @param outOfSessionCallbackUrl A URL for Twilio call when a new Interaction
      *                                has no Session.
@@ -162,6 +169,19 @@ public class ServiceUpdater extends Updater<Service> {
      */
     public ServiceUpdater setOutOfSessionCallbackUrl(final String outOfSessionCallbackUrl) {
         return setOutOfSessionCallbackUrl(Promoter.uriFromString(outOfSessionCallbackUrl));
+    }
+
+    /**
+     * The Chat Service Instance sid managed by Proxy Service. Enables Proxy to
+     * forward sms and channel messages to this chat instance. This is a one-to-one
+     * relationship..
+     * 
+     * @param chatInstanceSid The Chat Service Instance sid managed by Proxy Service
+     * @return this
+     */
+    public ServiceUpdater setChatInstanceSid(final String chatInstanceSid) {
+        this.chatInstanceSid = chatInstanceSid;
+        return this;
     }
 
     /**
@@ -235,6 +255,10 @@ public class ServiceUpdater extends Updater<Service> {
 
         if (outOfSessionCallbackUrl != null) {
             request.addPostParam("OutOfSessionCallbackUrl", outOfSessionCallbackUrl.toString());
+        }
+
+        if (chatInstanceSid != null) {
+            request.addPostParam("ChatInstanceSid", chatInstanceSid);
         }
     }
 }
